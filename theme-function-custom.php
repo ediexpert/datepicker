@@ -156,10 +156,13 @@ function enqueue_frontend_datepicker() {
                 return [availableDays.includes(day)];
             }
 
-            $('#tour_date').datepicker({
+            $('#inline_datepicker').datepicker({
                 dateFormat : 'yy-mm-dd',
                 beforeShowDay: enableAvailableDays,
-                minDate: '$minDate' // Set the minimum date based on cutoff days
+                minDate: '$minDate', // Set the minimum date based on cutoff days
+				onSelect: function(dateText) {
+                    $('#tour_date').val(dateText); // Save selected date to hidden input
+                }
             });
 
             $('form.cart').submit(function(e) {
@@ -183,10 +186,11 @@ function display_tour_date_picker() {
     $is_tour = get_post_meta($product->get_id(), '_is_tour', true);
 
     if ($is_tour === 'yes') {
-        echo '<div class="tour-date-picker">';
-        echo '<label for="tour_date">' . __('Select Tour Date:', 'woocommerce') . '</label>';
-        echo '<input type="text" id="tour_date" class="datepicker" name="tour_date" placeholder="YYYY-MM-DD">';
-        echo '</div>';
+         echo '<div class="form-row form-row-wide">
+                <label>Choose Tour Date:</label>
+                <div id="inline_datepicker"></div>
+                <input type="hidden" id="tour_date" name="tour_date" required />
+              </div>';
     }
 }
 
