@@ -1,4 +1,4 @@
-
+<?php
 // Add the custom field to the product general tab
 add_action('woocommerce_product_options_general_product_data', 'add_custom_general_fields');
 
