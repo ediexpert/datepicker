@@ -1,0 +1,20 @@
+{% if product.metafields.custom %}
+  <script type="application/json" id="product-metadata">
+     {
+    "product_id": "{{ product.id }}",
+    "is_service" : {{ product.metafields.custom.is_service }},
+    "available_on_days" : {{ product.metafields.custom.available_on_days }},
+    "cuttoff_days" : {{ product.metafields.custom.cuttoff_days }},
+    "blackout_dates" : {{ product.metafields.custom.blackout_dates }}
+     }
+  </script>
+
+  {% if product.metafields.custom.is_service == true %}
+    <div id="datepicker"></div>
+    <div class="product-date-selector">
+      <label for="delivery-date">Visit Date:</label>
+      <input type="date" id="alternate" name="properties[Delivery Date]" required disabled>
+      <p id="date-error" style="color: red; display: none;">Please select a delivery date.</p>
+    </div>
+  {% endif %}
+{% endif %}
