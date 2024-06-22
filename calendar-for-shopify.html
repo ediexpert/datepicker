@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Display inline</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+  
+  
+    <script>
+	var cutoffDays = 1;
+	var availableOnDays = ['Monday', 'Tuesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+	// Check if $availableOnDays is null or empty
+if (!availableOnDays || availableOnDays.length === 0) {
+    // Populate with default values 0-6
+    availableOnDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+}
+	// Create a new array to store the indices
+	var indices = [];
+// Map each day to its corresponding index
+availableOnDays.forEach(function(day) {
+    switch(day) {
+		case 'Sunday':
+            indices.push(0);
+            break;
+        case 'Monday':
+            indices.push(1);
+            break;
+        case 'Tuesday':
+            indices.push(2);
+            break;
+        case 'Wednesday':
+            indices.push(3);
+            break;
+        case 'Thursday':
+            indices.push(4);
+            break;
+        case 'Friday':
+            indices.push(5);
+            break;
+        case 'Saturday':
+            indices.push(6);
+            break;
+        
+        default:
+            // Handle unexpected day (though this should not happen with the given array)
+            break;
+    }
+});
+// indices now contains [0, 1, 2, 3, 4, 5, 6]
+console.log(indices);
+  $( function() {
+    $( "#datepicker" ).datepicker({ 
+		altField : "#alternate",
+		altFormat: "yy-mm-dd",
+		minDate : cutoffDays,
+		beforeShowDay : function(date){			
+			var day = date.getDay(); // Get the day of the week (0 - 6)
+			
+			// Disable Wednesday ( day = 3 )
+			return [indices.includes(day), '']; // return array: [enables/disabled, cssClass]
+		}
+	});
+  } );
+  
+
+  </script>
+</head>
+<body>
+ 
+Date: <div id="datepicker"></div> 
+
+Visit Date : <input type="date" id="alternate" size="30">
+ 
+</body></html>
